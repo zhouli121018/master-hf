@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/gm.css">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid">
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+      <div class="navbar-header">
+          <button id="navBtn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">代理管理</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" id="navlist">
+              <li><a href="#info">代理信息</a></li>
+              <li><a href="#agent">我的代理</a></li>
+              <li><a href="#vip">我的会员</a></li>
+              <li class="active"><a href="#detail">账单明细</a></li>
+              <li><a href="#count">统计信息</a></li>
+              <li><a href="#note">提现流水</a></li>
+          </ul>
+      </div>
+          <button type="button" class="btn btn-danger logout">退出登录</button>
+      </div>
+  </nav>
+   <div class="content">
+
+
+
+    <div id="detail" class="active">
+        <h2>账单明细</h2>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-inline form-btn">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">开始时间</div>
+                            <input type="date" class="form-control beginTime" value="2017-01-25" placeholder="开始时间"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">结束时间</div>
+                            <input type="date" class="form-control overTime" placeholder="结束时间"/>
+                        </div>
+                    </div>
+                    <input type="button" class="btn btn-default" value="查询"/>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th colspan="10" class="text-center">基本信息</th>
+                            <th colspan="2">直属销售</th>
+                            <th colspan="2">非直属销售</th>
+                        </tr>
+                        <tr>
+                            <th>昵称</th>
+                            <th>代理级别</th>
+                            <th>操作前</th>
+                            <th>操作</th>
+                            <th>剩余</th>
+                            <th>备注</th>
+                            <th>时间</th>
+                            <th>IP地址</th>
+                            <th>关联ID</th>
+                            <th>关联昵称</th>
+                            <th>总额</th>
+                            <th>提成</th>
+                            <th>总额</th>
+                            <th>提成</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>15167625570</td>
+                            <td>1</td>
+                            <td>51.4</td>
+                            <td>3</td>
+                            <td>54.4</td>
+                            <td>一级代理返佣</td>
+                            <td>2017-07-24 23:02:15</td>
+                            <td>无</td>
+                            <td>11411653</td>
+                            <td>鸿运当头</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>15167625570</td>
+                            <td>1</td>
+                            <td>51.4</td>
+                            <td>3</td>
+                            <td>54.4</td>
+                            <td>一级代理返佣</td>
+                            <td>2017-07-24 23:02:15</td>
+                            <td>无</td>
+                            <td>11411653</td>
+                            <td>鸿运当头</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>15167625570</td>
+                            <td>1</td>
+                            <td>51.4</td>
+                            <td>3</td>
+                            <td>54.4</td>
+                            <td>一级代理返佣</td>
+                            <td>2017-07-24 23:02:15</td>
+                            <td>无</td>
+                            <td>11411653</td>
+                            <td>鸿运当头</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>15167625570</td>
+                            <td>1</td>
+                            <td>51.4</td>
+                            <td>3</td>
+                            <td>54.4</td>
+                            <td>一级代理返佣</td>
+                            <td>2017-07-24 23:02:15</td>
+                            <td>无</td>
+                            <td>11411653</td>
+                            <td>鸿运当头</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>3</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page">
+                    <p>共 <b>18</b> 条记录</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   </div>
+</div>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/bootlint.js"></script>
+<script src="js/gm.js"></script>
+<script src="js/detail.js"></script>
+</body>
+</html>
+
+
+
+
+
+

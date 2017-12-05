@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weipai.mapper.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="Manager" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="power_id" property="powerId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="actualCard" property="actualcard" jdbcType="INTEGER" />
+    <result column="totalCards" property="totalcards" jdbcType="INTEGER" />
+    <result column="manager_up_id" property="managerUpId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="inviteCode" property="inviteCode" jdbcType="INTEGER" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="rootManager" property="rootManager" jdbcType="INTEGER" />
+    <result column="rebate" property="rebate" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="levelStr" property="levelStr" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="lastLoginTime" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+    <result column="redCard" property="redCard" jdbcType="INTEGER" />
+    <result column="totalLevelStr" property="totalLevelStr" jdbcType="VARCHAR" />
+    <result column="userCounts" property="userCounts" jdbcType="INTEGER" />
+    <result column="totalMoney" property="totalMoney" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, power_id, name, password, telephone, actualCard, totalCards, manager_up_id, status,inviteCode,weixin,qq,rootManager,rebate,pid,levelStr,uuid,redCard,createTime,lastLoginTime
+  </sql>
+   <!-- 后面新增的方法 -->
+   <!-- 根据账户得到密码 -->
+  <select id="selectObjectByUsername" resultMap="BaseResultMap" parameterType="STRING" >
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from manager
+  	where name =#{name,jdbcType=VARCHAR} and status="0"
+  </select>
+  
+  <select id="selectManagerByInvoteCode" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	 from manager
+  	where inviteCode = #{inviteCode,jdbcType=INTEGER} and status="0"
+  </select>
+  <!-- 得到代理商/零售商对象集合 -->
+  <select id="selectObjectsByMap" resultMap="BaseResultMap" parameterType="Map">
+  	select 
+  	 id, power_id, name, telephone, actualCard, totalCards, manager_up_id, status,inviteCode,weixin,qq,rootManager,rebate,pid,levelStr,uuid,createTime,redCard
+  	from manager
+  	where  
+  	id &gt; 1 and
+  	<if test="powerId != null" >
+        power_id=#{powerId,jdbcType=INTEGER} and 
+    </if>
+    <if test="pid != null" >
+        pid=#{pid,jdbcType=INTEGER} and 
+    </if>
+    <if test="managerUpId != null" >
+       	manager_up_id = #{managerUpId,jdbcType=INTEGER}   and 
+    </if>
+  	status="0" 
+  	order by id DESC  limit #{startNum,jdbcType=INTEGER},#{pageNumber,jdbcType=INTEGER}
+  </select>
+   
+   <select id="selectByMidTimeMountSum"  resultType="java.lang.Integer" parameterType="Map" >
+   select IFNULL(sum(m.betMount),0) from(
+select  a.*  from betlog_lot a where 1=1
+<if test="startTime != null" >
+ and a.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+ </if>
+ <if test="endTime != null" >
+    and a.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+<if test="managerId != null" >
+    and a.managerId = #{managerId,jdbcType=INTEGER}
+    </if>
+  union 
+select a.* from betlog_lot a ,manager b 
+where a.managerId = b.id 
+<if test="startTime != null" >
+ and a.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+ </if>
+ <if test="endTime != null" >
+    and a.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+<if test="managerId != null" >
+    and b.manager_up_id = #{managerId,jdbcType=INTEGER}
+    </if>
+ union 
+select a.* from betlog_lot a ,manager b,manager c 
+where a.managerId = b.id and b.manager_up_id = c.id 
+<if test="startTime != null" >
+ and a.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+ </if>
+ <if test="endTime != null" >
+    and a.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+<if test="managerId != null" >
+    and c.manager_up_id = #{managerId,jdbcType=INTEGER}
+    </if>
+union 
+select a.* from betlog_lot a ,manager b,manager c,manager d 
+where a.managerId = b.id and b.manager_up_id = c.id and c.manager_up_id = d.id 
+<if test="startTime != null" >
+ and a.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+ </if>
+ <if test="endTime != null" >
+    and a.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+ <if test="managerId != null" >
+    and d.manager_up_id = #{managerId,jdbcType=INTEGER}
+    </if>)m
+  </select>
+  
+   <select id="selectByAllTimeMountSum" resultType="java.lang.Integer" parameterType="Map" >
+   select IFNULL(sum(a.betMount),0) from betlog_lot a, manager b  where a.managerId=b.id 
+	<if test="startTime != null" >
+ 	and a.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+ 	</if>
+ 	<if test="endTime != null" >
+    and a.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="pid != null" >
+ 	and b.pid = #{pid,jdbcType=INTEGER}
+ 	</if>
+  </select>
+  
+  <select id="selectManagerByInviteCode" resultMap="BaseResultMap" parameterType="Map">
+    select m.id, m.power_id, m.name, m.telephone, m.manager_up_id, m.status,m.inviteCode,m.weixin,m.qq,m.rootManager,m.rebate,a.uuid as password,m.uuid from manager m,account a 
+    where m.id=a.managerId
+    <if test="name != null" >
+     and m.name=#{name,jdbcType=VARCHAR}
+  	</if>
+    <if test="inviteCode != null" >
+     and m.inviteCode=#{inviteCode,jdbcType=INTEGER}
+  	</if>
+  	<if test="uuid != null" >
+     and a.Uuid=#{uuid,jdbcType=INTEGER}
+  	</if>
+  </select>
+   
+  <select id="selectManagerInfoByMap" resultMap="BaseResultMap" parameterType="Map">
+  	select m.*,IFNULL(sum(n.money),0) as totalMoney from 
+	(select b.*,concat(IFNULL(b.levelStr,''),LPAD(b.id, 8, 0),'$%') as totalLevelStr,IFNULL(count(a.id),0) as userCounts 
+	from account a right join manager b on a.manager_up_id = b.id group by b.id having b.id>3) m left join 
+	(select b.id,concat(IFNULL(b.levelStr,''),LPAD(b.id, 8, 0),'$') as levelStr,IFNULL(sum(a.money),0) as money from manager b left join paylog a 
+	on a.managerId = b.id 
+	<if test="startTime != null" >
+  	and a.payTime &gt; #{startTime,jdbcType=TIMESTAMP}
+  	</if>
+  	<if test="endTime != null" >
+    and a.payTime &lt; #{endTime,jdbcType=TIMESTAMP}
+  	</if>
+  	<if test="pid != null" >
+    and  b.pid=#{pid,jdbcType=INTEGER}  
+    </if>
+    and (a.gameId = 1 or a.gameId = 3)
+    and payType = 0
+    group by b.id having b.id>2
+	) n
+	on n.levelStr like m.totalLevelStr group by m.id ORDER BY actualCard desc,totalCards desc
+  </select>
+  
+  <select id="selectManagerInfoByMapStats" resultMap="BaseResultMap" parameterType="Map">
+  	select b.id, b.power_id, b.name, b.uuid, b.telephone, b.manager_up_id, b.status,b.inviteCode,b.weixin,b.qq,b.totalCards,IFNULL(sum(d.betMount),0) as actualCard,b.rootManager 
+  	from (select b.id, b.power_id, b.name, b.telephone, b.manager_up_id, b.status,b.inviteCode,b.weixin,b.qq,IFNULL(count(a.id),0) as totalCards,b.rootManager,b.uuid  from 
+  	(select * from manager where status = 0
+  	<if test="managerId != null" >
+      and  manager_up_id=#{managerId,jdbcType=INTEGER}  
+    </if>
+    <if test="pid != null" >
+      and  pid=#{pid,jdbcType=INTEGER}  
+    </if>
+  	) b left join (select * from account where status = 0) a on a.manager_up_id = b.id  GROUP BY b.id) b  
+  	left join (select * from betlog_lot where 0 = 0
+  	<if test="startTime != null" >
+  	and createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+  	</if>
+  	<if test="endTime != null" >
+    and createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+  	</if>
+  	) d on d.managerId = b.id  GROUP BY b.id,b.power_id, b.name, b.uuid, b.telephone, b.manager_up_id, b.status,b.inviteCode,b.weixin,b.qq,b.totalCards ORDER BY actualCard desc,totalCards desc
+  </select>
+  
+  
+
+  <select id="selectSizeByManagerId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  	select 
+  	 IFNULL(count(*),0)
+  	from manager
+  	where  
+  	1=1
+  	<if test="_parameter>0" >
+        and manager_up_id=#{_parameter,jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- 修改房卡数量,总数-->
+  <update id="updateActualcard"  parameterType="Map">
+     update manager
+     set  actualCard = #{actualcard,jdbcType=INTEGER}
+      <if test="totalcards != null" >
+     	,totalCards =#{totalcards,jdbcType=INTEGER}
+      </if>
+     where 
+  	 status = "0" and id =#{id,jdbcType=INTEGER}
+  </update>
+  <!-- 根据手机号码得到对象 -->
+  <select id="selectManagerByTel"  parameterType="Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from manager
+  	where status = "0" 
+  	 <if test="telephone != null" >
+        and telephone =#{telephone,jdbcType=VARCHAR}
+      </if>
+      <if test="managerUpId != null" >
+         and manager_up_id =#{managerUpId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <!-- 修改代理商状态(删除代理商) -->
+  <update id="updateManagerStatus" parameterType="java.lang.Integer" >
+  	update manager
+  	set status = "1"
+  	where id =#{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateManagerLoginTime" parameterType="java.lang.Integer" >
+  	update manager
+  	set lastLoginTime = sysdate()
+  	where id =#{id,jdbcType=INTEGER}
+  </update>
+  <!-- 修改密码或手机号码 -->
+  <update id="updateByMap" parameterType="MAP" >
+  	update manager
+   <set >
+  	 <if test="password != null" >
+        password =#{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone =#{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin =#{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq =#{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null" >
+        inviteCode =#{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name =#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rebate != null" >
+        rebate =#{rebate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status =#{status,jdbcType=VARCHAR},
+      </if>
+      <if test="powerId != null" >
+        power_id =#{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="rootManager !=null">
+      rootManager = #{rootManager,jdbcType=INTEGER},
+      </if>
+      <if test="managerUpId !=null">
+      manager_up_id = #{managerUpId,jdbcType=INTEGER},
+      </if>
+      <if test="levelStr !=null">
+      levelStr = #{levelStr,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid !=null">
+      uuid = #{uuid,jdbcType=INTEGER},
+      </if>
+      <if test="createTime !=null">
+      createTime = #{createTime,jdbcType=TIMASTAMP},
+      </if>
+      <if test="redCard !=null">
+      redCard = #{redCard,jdbcType=INTEGER},
+      </if>
+      </set>
+    where  id =#{id,jdbcType=INTEGER}
+  </update>
+  <update id="updatePowerIdByMap" parameterType="MAP" >
+  	update manager
+  
+    set  power_id =#{powerId,jdbcType=INTEGER}
+   
+    where status = "0" and id =#{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <update id="updateByPrimaryKeyUpdateChild" parameterType="java.lang.Integer" >
+    update manager set manager_up_id = null where manager_up_id = #{id,jdbcType=INTEGER};
+    update account set manager_up_id = null where manager_up_id = #{id,jdbcType=INTEGER};
+    update account set managerId = 0 where managerId = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="save" parameterType="Manager" >
+    insert into manager (id, power_id, name, 
+      password, telephone, actualCard, totalCards, 
+      manager_up_id, status,weixin,qq,rootManager,uuid,createTime)
+    values (#{id,jdbcType=INTEGER}, #{powerId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{actualcard,jdbcType=INTEGER}, #{totalcards,jdbcType=INTEGER}, 
+      #{managerUpId,jdbcType=INTEGER}, #{status,jdbcType=CHAR},#{weixin,jdbcType=VARCHAR},#{qq,jdbcType=VARCHAR},{rootManager,jdbcType=INTEGER},#{levelStr,jdbcType=VARCHAR},#{uuid,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="saveSelective" parameterType="Manager" useGeneratedKeys="true" keyProperty="id">
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">  
+                SELECT LAST_INSERT_ID()  
+    </selectKey>
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="powerId != null" >
+        power_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="actualcard != null" >
+        actualCard,
+      </if>
+      <if test="totalcards != null" >
+        totalCards,
+      </if>
+      <if test="managerUpId != null" >
+        manager_up_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="inviteCode != null" >
+        inviteCode,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="rootManager != null" >
+        rootManager,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="rebate != null" >
+        rebate,
+      </if>
+      <if test="levelStr != null" >
+        levelStr,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="powerId != null" >
+        #{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+        <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="actualcard != null" >
+        #{actualcard,jdbcType=INTEGER},
+      </if>
+      <if test="totalcards != null" >
+        #{totalcards,jdbcType=INTEGER},
+      </if>
+      <if test="managerUpId != null" >
+        #{managerUpId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="inviteCode != null" >
+        #{inviteCode,jdbcType=INTEGER},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="rootManager != null" >
+        #{rootManager,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="rebate != null" >
+        #{rebate,jdbcType=VARCHAR},
+      </if>
+      <if test="levelStr != null" >
+        #{levelStr,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=INTEGER},
+      </if><if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Manager" >
+    update manager
+    <set >
+      <if test="powerId != null" >
+        power_id = #{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="actualcard != null" >
+        actualCard = #{actualcard,jdbcType=INTEGER},
+      </if>
+      <if test="totalcards != null" >
+        totalCards = #{totalcards,jdbcType=INTEGER},
+      </if>
+      <if test="managerUpId != null" >
+        manager_up_id = #{managerUpId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="inviteCode != null" >
+        inviteCode = #{inviteCode,jdbcType=INTEGER},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="rootManager != null" >
+        rootManager = #{rootManager,jdbcType=INTEGER},
+      </if>
+      <if test="levelStr != null" >
+        levelStr = #{levelStr,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="redCard != null" >
+        redCard = #{redCard,jdbcType=INTEGER},
+      </if>
+      
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Manager" >
+    update manager
+    set power_id = #{powerId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      actualCard = #{actualcard,jdbcType=INTEGER},
+      totalCards = #{totalcards,jdbcType=INTEGER},
+      manager_up_id = #{managerUpId,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      rootManager = #{rootManager,jdbcType=VARCHAR},
+      levelStr = #{levelStr,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      redCard = #{redCard,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

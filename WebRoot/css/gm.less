@@ -1,0 +1,423 @@
+@import "bootstrap.css";
+body{
+  padding-top:60px;
+  padding-bottom:60px;
+  background:url(../img/1.jpg) no-repeat;
+  background-size:cover;
+  transition:padding-top 0.3s linear;
+}
+//@media screen and (max-width:767px) {
+//  body{
+//    padding-top:260px;
+//  }
+//}
+form>input.search{
+  height:32px;
+}
+nav.navbar{
+
+  ul {
+    height:100%
+  }
+  //.navbar-brand{
+  //  text-align: center;
+  //  padding-left:30%;
+  //  img{
+  //    width:65%;
+  //  }
+  //}
+  button.logout{
+    position: absolute;
+    right: 1%;
+    top: 10px
+  }
+}
+@media screen and (min-width:768px){
+  .navbar .nav{
+    top:10px;
+  }
+}
+@media screen and (max-width:767px){
+  nav.navbar button.logout{
+    right:15%;
+  }
+  nav.navbar .nav{
+
+    float:none;
+    >li{
+      float:none;
+    }
+  }
+}
+.navbar{
+  margin:0;
+
+}
+.container-fluid{
+  padding:6px;
+  margin:0;
+}
+#info{
+  div.well{
+    background: #f2725e;
+  }
+  div.general-info{
+    margin:2% 0;
+  }
+  div.general-info>div{
+    border:1px solid #e4e4e4;
+  }
+  div.general-info>div.info-head{
+    text-align:center;
+    padding: .5%;
+    border-bottom:none;
+    background: #eee;
+  }
+  div.info-body{
+    padding:1%;
+    >table{
+      tr td:first-child,td:nth-child(3),td:nth-child(5){
+        text-align:right;
+      }
+    }
+    div.money{
+      >table{
+        td{
+          width:25%;
+        }
+      }
+    }
+  }
+}
+.rt{
+  float:right;
+}
+#detail{
+  div.panel{
+    form{
+      margin:2% 0;
+    }
+  }
+}
+//#navlist{
+//  font-size:1.2em;
+//}
+div.content>div{
+  display:none;
+
+}
+div.content>div.active{
+  display:block;
+}
+div.content h2{
+  padding:1%;
+  margin-bottom:3%;
+  background: #4da9eb;
+  border-radius:5px;
+}
+
+#agent{
+  position:relative;
+  >button{
+    margin-bottom:1%;
+  }
+  //th{
+  //  text-align: center;
+  //}
+  td{
+    vertical-align: middle;
+
+  }
+}
+#add-message,#agentDetail,#vipDetail{
+  z-index: 100;
+  display:none;
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  input{
+    height:32px;
+  }
+  form{
+    max-height:100%;
+    overflow: auto;
+    h4{
+      text-align: center;
+      padding:2% 0;
+      border-bottom:2px dashed #aaa;
+    }
+    position:absolute;
+    width:400px;
+    left:50%;
+    top:50px;
+    margin-left:-200px;
+    margin-top:30px;
+    background:rgb(255,255,255);
+    padding:1% 2% 3%;
+    border-radius:5px;
+    box-shadow: 0 0 26px #041A36;
+    border-top: 8px solid #42EC00;
+    >input{
+      margin-left:1%;
+      width:48%;
+      outline:none;
+    }
+    input.has-err{
+      border-color:#e4393c;
+    }
+    input.success{
+      border-color:#42cc22;
+    }
+    p{
+      display:none;
+    }
+    p.error{
+      display:block;
+      color:#e4393c;
+      padding:1% 0;
+    }
+  }
+}
+@media screen and (max-width:767px) {
+  #add-message,#agentDetail,#vipDetail{
+    form{
+      width:95%;
+      margin-left:-47.5%;
+    }
+  }
+}
+#vip{
+  table{
+    tr th{
+      text-align: center;
+    }
+    td{
+      width:30%;
+      text-align: center;
+    }
+  }
+}
+.close{
+  color:#e4393c;
+  border:0;
+  padding:10px;
+  outline: none;
+  font-weight:bold;
+}
+.close:hover{
+  color:red;
+}
+.clear:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+#count{
+  div.online{
+    padding:.5% 5%;
+    >p{
+      display:inline-block;
+      width:40%;
+    }
+  }
+  div.box{
+    padding:1%;
+    p.rt{
+      margin-left:3%;
+      line-height:2;
+      input{
+        width:50px;
+      }
+    }
+    a.active{
+      background:#B9F;
+      color:#fff;
+    }
+  }
+  div.box:after{
+    content:"";
+    display:block;
+    clear:both;
+  }
+  table{
+    th{
+      text-align: center;
+    }
+    td{
+      width:30%;
+      text-align: center;
+    }
+    tbody tr{
+      cursor:pointer;
+    }
+  }
+  #agent-detail{
+    p {
+      width: 100%;
+      text-align: right;
+    }
+    //input{
+    //  width:50%;
+    //}
+  }
+}
+@media screen and (max-width:980px){
+  #agent-detail{
+
+  }
+}
+@media screen and (max-width:768px) {
+  #count p{
+    width:100%;
+    text-align:right;
+  }
+}
+#user-count{
+  display:none;
+}
+
+#login{
+  position:relative;
+  background:#fff;
+  padding:1% 3%;
+  width:600px;
+  margin:50px auto;
+  border:1px solid #000;
+  border-radius:5px;
+  box-shadow: 0 0 26px #041A36;
+  border-top: 8px solid #42EC00;
+  >p{
+    padding-top:6%;
+    text-align: center;
+  }
+  .item-box{
+    position:relative;
+    div.img-box{
+      padding:10% 32%;
+    }
+    img.testCode{
+      width: 100%;
+      cursor: pointer;
+    }
+    .item{
+      border-radius: 5px;
+      padding: 5px 10px 5px 12px;
+      border: 1px solid #ececec;
+      margin-bottom: 18px;
+      input{
+        padding: 8px 0;
+        width: 345px;
+        box-sizing:border-box;
+        margin-left:25px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 18px;
+        font-family: "΢���ź�", arial, sans-serif;
+        vertical-align: middle;
+        border: 0 none;
+        outline: 0;
+        resize: none;
+      }
+      a{
+        color: #69C3FF;
+      }
+    }
+
+  }
+
+  h2{
+    text-align: center;
+  }
+  i{
+    display: inline-block;
+    margin-right: 6px;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background: url(../img/login.png) no-repeat;
+  }
+  i.icon-pwd{
+    background-position: -48px 0;
+  }
+  i.icon-test{
+    background-position: -24px 0;
+  }
+  div.login-btn-panel{
+    padding:2%;
+    box-sizing:border-box;
+    >input{
+      padding: 3px 0;
+      width: 49%;
+      height: 48px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #FFFFFF;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      border: 0;
+    }
+    input.forget-pwd{
+      background-color: #f0ad4e;
+
+    }
+  }
+}
+
+@media screen and (max-width:600px){
+  #login{
+    width:300px;
+    .item-box>.item input{
+      width:140px;
+    }
+  }
+}
+.focus{
+  border:1px solid #a6e1f3;
+  box-shadow:0 0 12px #baf7ff;
+}
+
+form input[type='date']{
+  height:32px;
+}
+input[type='number']{
+  height:34px;
+}
+
+.disable0{
+
+}
+div.divide{
+  input{
+    height:32px;
+  }
+  input.form-control{
+    width:70%;
+    max-width:150px;
+  }
+  .toTop{
+    position:relative;
+    top:-4px;
+  }
+}
+div.divide-count{
+  margin-bottom:6%;
+}
+div.online-count{
+  display:none;
+}
+.time{
+  padding:2%;
+}
+#agent-detail.modal.fade.in {
+  left:50%;
+  top: 10%;
+ .modal-dia.modal-dialog {
+   width: 98%;
+   margin: 5% auto;
+ }
+}
+
+

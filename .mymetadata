@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="MaJiangManage"
+  id="myeclipse.1468287234446"
+  context-root="/MaJiangManage"
+  j2ee-spec="5.0"
+  archive="MaJiangManage.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

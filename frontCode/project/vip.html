@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/gm.css">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid">
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+      <div class="navbar-header">
+          <button id="navBtn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">代理管理</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" id="navlist">
+              <li><a href="#info">代理信息</a></li>
+              <li><a href="#agent">我的代理</a></li>
+              <li class="active"><a href="#vip">我的会员</a></li>
+              <li><a href="#detail">账单明细</a></li>
+              <li><a href="#count">统计信息</a></li>
+              <li><a href="#note">提现流水</a></li>
+          </ul>
+      </div>
+          <button type="button" class="btn btn-danger logout">退出登录</button>
+      </div>
+  </nav>
+   <div class="content">
+
+    <div id="vip" class="active">
+        <h2>我的会员</h2>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-inline form-btn text-right">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">开始时间</div>
+                            <input type="date" class="form-control beginTime" placeholder="开始时间"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">结束时间</div>
+                            <input type="date" class="form-control overTime"  placeholder="结束时间"/>
+                        </div>
+                    </div>
+                    <input type="text" class="search" placeholder="请输入玩家id"/>
+                    <input type="button" class="btn btn-default" value="查询"/>
+
+                </form>
+                <div class="table-responsive">
+                    <table id="vipTbl" class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>账号ID</th>
+                            <th>账号昵称</th>
+                            <th>注册时间</th>
+                            <th>编辑</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                               <td>159268</td>
+                               <td>鸿运当头</td>
+                               <td>2017-07-25 08:26:27</td>
+                               <td><a href="#">修改</a></td>
+                           </tr>
+                           <tr>
+                               <td>456789</td>
+                               <td>鸿运当头</td>
+                               <td>2017-07-25 08:26:27</td>
+                               <td><a href="#">修改</a></td>
+                           </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="vip-pages"></div>
+        <div id="vipDetail">
+
+            <form name="addAgentForm">
+                <button type="button" class="close"><span>&times;</span></button>
+                <h4>会员信息</h4>
+                <div id="vip-message"></div>
+
+                <input type="button"  class="btn  btn-success recharge" value="充 值"/>
+                <input type="button" class="btn  btn-danger cancel" value="取 消"/>
+            </form>
+        </div>
+    </div>
+   </div>
+</div>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/bootlint.js"></script>
+<script src="js/gm.js"></script>
+<script src="js/vip.js"></script>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery.treegrid.css">
+    <link rel="stylesheet" href="css/gm.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+      <div class="navbar-header">
+          <button id="navBtn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+              代理管理
+          </a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" id="navlist">
+              <li><a href="#info">代理信息</a></li>
+              <li  class="active"><a href="#agent">我的代理</a></li>
+              <li><a href="#vip">我的会员</a></li>
+              <li><a href="#detail">账单明细</a></li>
+              <li><a href="#count">统计信息</a></li>
+              <li><a href="#note">提现流水</a></li>
+          </ul>
+      </div>
+          <button type="button" class="btn btn-danger logout">退出登录</button>
+      </div>
+  </nav>
+   <div class="content">
+    <div id="agent" class="active">
+        <h2>我的代理</h2>
+        <button type="button" class="btn  btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+            新增代理
+        </button>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="clear time">
+                    <ul class="nav nav-pills pull-right">
+                        <li  class="active"><a href="#">上月充值</a></li>
+                        <li><a href="#">本月充值</a></li>
+                        <li><a href="#">上周充值</a></li>
+                        <li><a href="#">本周充值</a></li>
+                        <li><a href="#">昨天充值</a></li>
+                        <li><a href="#">今天充值</a></li>
+                    </ul>
+                </div>
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped table-hover mainTbl tree">
+                        <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>手机号</th>
+                            <th>微信</th>
+                            <th>邀请码</th>
+                            <th>游戏用户ID</th>
+                            <th>会员数</th>
+                            <th>金额</th>
+                            <th>代理状态</th>
+                            <th>代理级别</th>
+                            <th>编辑</th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr>
+                            <td>刘惠丰</td>
+                            <td>15019210162</td>
+                            <td>a52498618</td>
+                            <td>23292</td>
+                            <td>11442329</td>
+                            <td>0</td>
+                            <td>正常</td>
+                            <td>
+                                <select>
+                                    <option value="0">皇冠代理</option>
+                                    <option value="1">钻石代理</option>
+                                    <option value="2">铂金代理</option>
+                                    <option value="3">黄金代理</option>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page">
+                    <p>共 <b>1</b> 条记录</p>
+                    <!--<div class="row">-->
+                        <!--<div class="col-xs-4 col-sm-3 col-md-2">会员总数：<span>0</span></div>-->
+                        <!--<div class="col-xs-8 col-sm-9 col-md-10">黄金代理总数量：<span>3</span></div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="agent-pages"></div>
+
+        <div id="add-message">
+            <form name="addAgentForm">
+                <button type="button" class="close"><span>&times;</span></button>
+                <h4>新增代理信息</h4>
+                <div id="addAgentMessage"></div>
+                <input type="button"  class="btn  btn-success sureAdd" value="增加代理"/>
+                <input type="button" class="btn  btn-danger cancel" value="取 消"/>
+
+            </form>
+        </div>
+        <div id="agentDetail">
+            <form>
+                <button type="button" class="close"><span>&times;</span></button>
+                <h4>代理信息</h4>
+                <div id="agent-message"></div>
+                <input type="button"  class="btn  btn-success sure" value="修 改"/>
+                <input type="button" class="btn  btn-danger cancel" value="取 消"/>
+            </form>
+        </div>
+    </div>
+
+
+   </div>
+</div>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/bootlint.js"></script>
+<script type="text/javascript" src="js/jquery.treegrid.min.js"></script>
+<script src="js/gm.js"></script>
+<script src="js/agent1.js"></script>
+</body>
+</html>
+
+
+
+
+
+
